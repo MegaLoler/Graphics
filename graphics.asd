@@ -8,4 +8,5 @@
 			((:file "package")
 			 (:file "util")
 			 (:file "angle")
-			 (:file "color")))))
+			 (:file "color")
+			 (:file "image")))))

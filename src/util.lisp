@@ -2,6 +2,19 @@
 
 ;;; generic util
 
+;; i got this from stack overflow :p
+(defun array-to-list (array)
+  (let* ((dimensions (array-dimensions array))
+         (depth      (1- (length dimensions)))
+         (indices    (make-list (1+ depth) :initial-element 0)))
+    (labels ((recurse (n)
+               (loop for j below (nth n dimensions)
+                     do (setf (nth n indices) j)
+                     collect (if (= n depth)
+                                 (apply #'aref array indices)
+                               (recurse (1+ n))))))
+      (recurse 0))))
+
 (defun make-keyword (name)
   "Make a keyword symbol from any symbol."
   (intern (symbol-name name) "KEYWORD"))

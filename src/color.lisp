@@ -1,8 +1,8 @@
 ;; todo:
-;;   error when given args are wrong type?
-;;   make subclasses of hsv for hsl, hsy, and hsi
-;;   make a color subclass using color names for representation
-;;   versions for all the accessors that take int designator
+;;   error when given slot values are wrong type?
+;;   make hsv/hsl generic with subclasses for hsv, hsl, hsy, and hsi
+;;     (https://en.wikipedia.org/wiki/HSL_and_HSV#Lightness)
+;;   somehow generalize color designators... have a general color designator type... which can be either one of the classes or a color symbol or an int
 
 (in-package :graphics.color)
 
@@ -10,6 +10,7 @@
 (defclass color () ())
 
 ;; color stored as rgb
+;; default black
 (defclass rgb-color (color)
   ((red :initform 0
 	:initarg :red
@@ -25,6 +26,7 @@
 	 :type (real 0 1))))
 
 ;; color stored as hsv
+;; default red (so giving only one argument let's you pick a color by hue)
 (defclass hsv-color (color)
   ((hue :initform (make-angle)
 	:initarg :hue

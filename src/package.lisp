@@ -1,6 +1,7 @@
 (defpackage :graphics.util
   (:use :cl)
-  (:export make-keyword
+  (:export array-to-list
+	   make-keyword
 	   concat-symbols
 	   make-constructor-name-symbol
 	   multiple?
@@ -40,7 +41,12 @@
 	   color-value
 	   color-8-bit-red
 	   color-8-bit-green
-	   color-8-bit-bule
+	   color-8-bit-blue
 	   color-24-bit-rgb-little-endian
 	   color-24-bit-rgb-big-endian
 	   color-hex))
+
+(defpackage :graphics.image
+  (:use :cl :graphics.color :graphics.angle :graphics.util)
+  (:export make-pixmap
+	   ppm-ascii))
