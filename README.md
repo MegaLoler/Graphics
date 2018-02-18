@@ -12,7 +12,9 @@ Rendering a graph of hue-value color space to a file:
 	      *outfile* :overwrite t)
 ```
 Resulting image:
+
 ![Image of hue-value graph](examples/images/hue-value.png)
+
 
 Rendering a... frog? to a file using constructive solid geometry!
 ```lisp
@@ -36,4 +38,5 @@ Rendering a... frog? to a file using constructive solid geometry!
 	      *outfile* :overwrite t)
 ```
 Resulting image:
+
 ![Image of csg "frog"](examples/images/frog.png)
