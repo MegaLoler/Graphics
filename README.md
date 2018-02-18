@@ -15,6 +15,7 @@ Resulting image:
 
 ![Image of hue-value graph](examples/images/hue-value.png)
 
+---
 
 Rendering a... frog? to a file using constructive solid geometry!
 ```lisp
