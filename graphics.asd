@@ -9,4 +9,5 @@
 			 (:file "util")
 			 (:file "angle")
 			 (:file "color")
-			 (:file "image")))))
+			 (:file "image")
+			 (:file "vector"))))

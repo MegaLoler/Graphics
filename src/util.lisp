@@ -10,10 +10,36 @@
     (labels ((recurse (n)
                (loop for j below (nth n dimensions)
                      do (setf (nth n indices) j)
-                     collect (if (= n depth)
-                                 (apply #'aref array indices)
-                               (recurse (1+ n))))))
+		  collect (if (= n depth)
+			      (apply #'aref array indices)
+			      (recurse (1+ n))))))
       (recurse 0))))
+
+;; also stolen from stack overflow :p
+(defun combinations (&rest lists)
+  (if (car lists)
+      (mapcan (lambda (inner-val)
+                (mapcar (lambda (outer-val)
+                          (cons outer-val
+                                inner-val))
+                        (car lists)))
+              (apply #'combinations (cdr lists)))
+      (list nil)))
+
+(defun positions (array)
+  "Get a list of all possible sets of coordinates in an array."
+  (apply #'combinations (mapcar #'range (array-dimensions array))))
+
+(defun range (max &key (min 0) (step 1))
+  "Generate a range of numbers."
+  (loop for x from min below max by step collect x))
+
+(defun resize-list (ls length &optional fill)
+  "Change the length of a list, filling any new spaces with fill."
+  (let ((delta (- length (length ls))))
+    (cond ((= delta 0) ls)
+	  ((> delta 0) (append ls (make-list delta :initial-element fill)))
+	  ((< delta 0) (subseq ls 0 length)))))
 
 (defun concat (ls &optional (type 'string))
   "Concatenate a list of strings."
@@ -33,7 +59,7 @@
 	 (list (progn ,@body)))))
 
 (defmacro iterate (array indices item-sym &body body)
-  "Iterate over all the combinations in a multidimensional array."
+  "Iterate over all the combinations in a multidimensional array of known dimensions."
   (let ((array-sym (gensym)))
     `(let ((,array-sym ,array))
        ,(iterate-helper array-sym indices indices item-sym body))))

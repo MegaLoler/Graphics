@@ -1,6 +1,9 @@
 (defpackage :graphics.util
   (:use :cl)
   (:export array-to-list
+	   resize-list
+	   range
+	   positions
 	   get-filename-extension
 	   concat
 	   join
