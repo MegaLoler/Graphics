@@ -26,6 +26,18 @@
               (apply #'combinations (cdr lists)))
       (list nil)))
 
+(defun square (val)
+  "Square a number."
+  (* val val))
+
+(defun and-f (&rest args)
+  "Logical AND as a function rather than a macro."
+  (eval `(and ,@args)))
+
+(defun or-f (&rest args)
+  "Logical OR as a function rather than a macro."
+  (eval `(or ,@args)))
+
 (defun positions (array)
   "Get a list of all possible sets of coordinates in an array."
   (apply #'combinations (mapcar #'range (array-dimensions array))))

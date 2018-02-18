@@ -14,12 +14,13 @@
 (defmacro generate (size coordinate-syms dimension-syms generator)
   "Generate a pixmap given a pixel generator expression."
   (let ((pixmap-sym (gensym)))
-  `(let* ((,(first dimension-syms) ,(first size))
-	  (,(second dimension-syms) ,(second size))
-	  (,pixmap-sym (make-pixmap ,@dimension-syms)))
-     (iterate ,pixmap-sym ,coordinate-syms ,(gensym)
-       (setf (aref ,pixmap-sym ,@coordinate-syms) ,generator))
-     ,pixmap-sym)))
+    `(let ((,pixmap-sym (make-pixmap ,@size))
+	   ,@(loop for dimension-sym in dimension-syms
+		for dimension in size
+		collect (list dimension-sym dimension)))
+       (iterate ,pixmap-sym ,coordinate-syms ,(gensym)
+		(setf (aref ,pixmap-sym ,@coordinate-syms) ,generator))
+       ,pixmap-sym)))
 
 (defun ppm-format-color (color &optional stream)
   "Format a single color for spaced ascii ppm."

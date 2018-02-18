@@ -14,6 +14,9 @@
 	   multiple?
 	   truthy?
 	   between?
+	   and-f
+	   or-f
+	   square
 
 	   make-constructor
 	   defconstructor
@@ -60,3 +63,47 @@
 	   ppm-ascii
 	   format-pixmap
 	   write-pixmap))
+
+(defpackage :graphics.vector
+  (:use :cl :graphics.util)
+  (:export vec-coords-in-bounds?
+	   vec-max-dimensions
+	   vec-get
+	   vec-operation
+	   vec-add
+	   vec-subtract
+	   vec-multiply
+	   vec-divide
+	   vec-multiply-scalar
+	   vec-reverse
+	   vec-distance))
+
+(defpackage :graphics.transform
+  (:use :cl :graphics.vector)
+  (:export transform-vectors
+	   translate
+	   scale
+	   make-transformation
+	   make-translation
+	   make-scaling
+	   transform
+	   reverse-transform))
+
+(defpackage :graphics.geometry
+  (:use :cl :graphics.util :graphics.vector :graphics.transform)
+  (:export csg-n-sphere
+	   make-csg-n-sphere
+	   make-csg-circle
+	   make-csg-sphere
+	   csg-transform
+	   csg-operation
+	   csg-union
+	   csg-intersection
+	   csg-negation
+	   csg-difference
+	   csg-color-fg
+	   csg-color-bg))
+
+(defpackage :graphics.raster
+  (:use :cl :graphics.image :graphics.color :graphics.geometry)
+  (:export rasterize))

@@ -1,8 +1,8 @@
-(asdf:defsystem :graphics
+(defsystem #:graphics
   :description "Playin' with graphics stuff. I dunno! ;D"
   :author "MegaLoler"
   :serial t
-  :components ((:module src
+  :components ((:module "src"
 			:serial t
 			:components
 			((:file "package")
@@ -10,4 +10,7 @@
 			 (:file "angle")
 			 (:file "color")
 			 (:file "image")
-			 (:file "vector"))))
+			 (:file "vector")
+			 (:file "transform")
+			 (:file "geometry")
+			 (:file "raster")))))

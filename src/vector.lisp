@@ -56,3 +56,17 @@
 (defun vec-divide (&rest vectors)
   "Divide vectors."
   (apply #'vec-operation (cons #'/ vectors)))
+
+(defun vec-multiply-scalar (scalar vector)
+  "Multiply vectors by a scalar value."
+  (apply #'vector (mapcar (lambda (component)
+			    (* scalar component))
+			  (array-to-list vector))))
+
+(defun vec-reverse (vector)
+  "Reverse the direction a vector."
+  (vec-multiply-scalar -1 vector))
+
+(defun vec-distance (vector)
+  "Get the distance of a vector ."
+  (sqrt (apply #'+ (mapcar #'square (array-to-list vector)))))

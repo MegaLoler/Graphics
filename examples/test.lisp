@@ -1,7 +1,7 @@
 ;; here i'll just play around i suppose :O
 
 (defpackage :graphics-test
-  (:use :cl :graphics.image :graphics.angle :graphics.color :graphics.util))
+  (:use :cl :graphics.image :graphics.angle :graphics.color :graphics.util :graphics.raster :graphics.geometry :graphics.transform :graphics.vector))
 (in-package :graphics-test)
 
 ;; outfile for testing
@@ -23,7 +23,21 @@
 				    :green (/ y height)))
 	      *outfile* :overwrite t)
 
-(aref #(1 2 3) 3)
-
-
-(mapcar #'max '(1 2 3) '( 4 5 0))
+;; render a scene with csg!
+(defparameter *csg-scene*
+  (csg-union
+   (csg-difference (csg-transform (make-csg-circle)
+				  (make-translation (vector 1 1)))
+		   (csg-transform (make-csg-circle)
+				  (make-scaling (vector 3 2/3))))
+   (csg-color-fg
+    (csg-transform
+     (csg-transform (make-csg-circle)
+		    (make-scaling (vector 1/5 2/3)))
+     (make-translation (vector -1)))
+    (make-color :hue (make-turns 1/15)))))
+(write-pixmap (rasterize (-3 -2) (3 2) (300 200)
+			 *csg-scene*
+			 :fg (make-color :hue (make-turns 1/5))
+			 :bg (make-color :hue (make-turns 3/5)))
+	      *outfile* :overwrite t)
