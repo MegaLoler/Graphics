@@ -15,6 +15,33 @@
                                (recurse (1+ n))))))
       (recurse 0))))
 
+(defun concat (ls &optional (type 'string))
+  "Concatenate a list of strings."
+  (apply #'concatenate `(,type ,@ls)))
+
+(defun join (ls &optional (delimiter " "))
+  "Join a list of strings with a delimiter."
+  (format nil (concatenate 'string "~{~a~^" delimiter "~}") ls))
+
+(defun iterate-helper (array-sym all-indices indices item-sym body)
+  "Helper function for the iterate macro below."
+  (if indices
+      `(loop for ,@(last indices)
+	  from 0 to (1- (array-dimension ,array-sym ,(1- (length indices))))
+	  append ,(iterate-helper array-sym all-indices (butlast indices) item-sym body))
+      `(let ((,item-sym (aref ,array-sym ,@all-indices)))
+	 (list (progn ,@body)))))
+
+(defmacro iterate (array indices item-sym &body body)
+  "Iterate over all the combinations in a multidimensional array."
+  (let ((array-sym (gensym)))
+    `(let ((,array-sym ,array))
+       ,(iterate-helper array-sym indices indices item-sym body))))
+
+(defun get-filename-extension (filename)
+  "Get the extension substring of a filename string."
+  (subseq filename (1+ (position #\. filename :from-end t))))
+
 (defun make-keyword (name)
   "Make a keyword symbol from any symbol."
   (intern (symbol-name name) "KEYWORD"))

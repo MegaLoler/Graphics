@@ -1,6 +1,10 @@
 (defpackage :graphics.util
   (:use :cl)
   (:export array-to-list
+	   get-filename-extension
+	   concat
+	   join
+	   iterate
 	   make-keyword
 	   concat-symbols
 	   make-constructor-name-symbol
@@ -49,4 +53,7 @@
 (defpackage :graphics.image
   (:use :cl :graphics.color :graphics.angle :graphics.util)
   (:export make-pixmap
-	   ppm-ascii))
+	   generate
+	   ppm-ascii
+	   format-pixmap
+	   write-pixmap))
